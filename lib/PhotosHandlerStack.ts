@@ -7,8 +7,12 @@ import {
   Runtime,
 } from 'aws-cdk-lib/aws-lambda';
 
+interface PhotosHandlerStackProps extends cdk.StackProps {
+  targetBucketArn: string
+}
+
 export class PhotosHandlerStack extends cdk.Stack {
-  constructor(scope: Construct, id: string, props?: cdk.StackProps) {
+  constructor(scope: Construct, id: string, props: PhotosHandlerStackProps) {
     super(scope, id, props);
 
     // Import other bucket
@@ -23,7 +27,7 @@ export class PhotosHandlerStack extends cdk.Stack {
       }
     `),
       environment: {
-        TARGET_BUCKET: targetBucket,
+        TARGET_BUCKET: props.targetBucketArn,
       },
     });
   }
